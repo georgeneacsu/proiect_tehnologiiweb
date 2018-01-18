@@ -38,6 +38,7 @@ function mainController($scope, $http){
     };
     
     $scope.viewProjectNotes = function(id) {
+        $scope.formData.noteDescription = '';
         $http.get('/api/projects/'+id+'/notes')
             .success(function(data) {
                 $scope.notes = data;

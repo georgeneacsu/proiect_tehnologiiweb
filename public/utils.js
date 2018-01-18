@@ -10,8 +10,5 @@ $(document).ready(function(){
     //show add note form
     $('#addNote').click(function(){
         $('#addNoteForm').toggle();
-        var pId = $('.pid').val();
-        $('#addNote').attr('ng-click','addNote('+pId+')');
     })
-    
 })
