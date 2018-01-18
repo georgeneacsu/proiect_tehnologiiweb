@@ -6,11 +6,96 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
         <script type="text/javascript" src="core.js"></script>
+        <script type="text/javascript" src="utils.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="custom.css">
     </head>
     <body ng-controller="mainController">
-        <h1>Main Page</h1>
-        <div>
-            Total number of projects {{ projects.length }}
+        <div class="container">
+            <div class="row text-center" id="header">
+                <h1>Notes from projects I've studied</h1>
+            </div>
+            <div class="row text-center" id="info">
+                <h4>Total number of projects {{ projects.length }}</h4>
+            </div>
+            <div class="row" id="projectlist" ng-show="showProjects">
+                <!-- Button to display add form for projects -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button id="addProject" class="btn btn-primary btn-lg">Add project</button>
+                </div>
+                <!-- Projects list-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <p><strong>Project Name</strong></p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <p><strong>Project Description</strong></p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <p><strong>Notes</strong></p>
+                        </div>
+                    </div>
+                    <!-- Template for repeater in projects -->
+                    <div class="checkbox" ng-repeat="project in projects">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="chkcontainer">{{ project.projectName }}
+                                  <input type="checkbox" ng-click="deleteProject(project.id)">
+                                  <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <p>{{ project.projectDescription }}</p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <button class="btn-primary btn-sm" id="viewNotes" ng-click="viewProjectNotes(project.id)">View notes</button>
+                            </div>
+                        </div>
+                        <div class="row" id="{{project.id}}" ng-show="showNotes==project.id">
+                            <!-- Projects list-->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <!-- Template for repeater in notes -->
+                                <p class="text-center">Notes</p>
+                                <div class="checkbox" ng-repeat="note in notes">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <label class="chkcontainer">{{ note.noteDescription }}
+                                              <input type="checkbox" ng-click="deleteNote(project.id,note.id)">
+                                              <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Form to add note -->
+                            <div class="addNoteForm" class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                    <p class="text-center">Add new note</p>
+                                    <form>
+                                        <div class="form-group">
+                                            <input type="text" name="noteDescription" class="form-control input-lg text-center" placeholder="Note description" ng-model="formData.noteDescription">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-lg" ng-click="addNote(project.id)">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form to add project -->
+            <div id="addProjectForm" class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" name="projectName" class="form-control input-lg text-center" placeholder="Project Name" ng-model="formData.projectName">
+                            <input type="text" name="projectDescription" class="form-control input-lg text-center" placeholder="Project Description" ng-model="formData.projectDescription">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg" ng-click="addProject()">Save</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </body>
 </html>
