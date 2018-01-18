@@ -13,6 +13,12 @@
     font-weight: 400;
 }
 
+hr {
+  border-top: 3px solid #337ab7 !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
 /*custom checkbox*/
 
 .chkcontainer {
